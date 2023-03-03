@@ -41,25 +41,33 @@ export const Recipes = () => {
 
   return (
     <Wrapper>
-      <ul className='recipes'>
-        {newRecipes &&
-          newRecipes.map((recipe) => <Recipe key={recipe.id} {...recipe} />)}
-      </ul>
-      {newRecipes && (
-        <div className='pagination'>
-          {!page == 0 && (
-            <button className='prev-btn' onClick={prevPage}>
-              <FaArrowLeft />
-              page <span> {displayPage - 1}</span>
-            </button>
-          )}
-          {page === recipes.length - 1 ? null : (
-            <button className='next-btn' onClick={nextPage}>
-              <FaArrowRight /> page <span> {displayPage + 1}</span>
-            </button>
-          )}
-        </div>
-      )}
+      <div className='result-wrapper'>
+        <ul className='recipes'>
+          {newRecipes &&
+            newRecipes.map((recipe) => <Recipe key={recipe.id} {...recipe} />)}
+        </ul>
+        {newRecipes && (
+          <div className='pagination'>
+            {!page == 0 && (
+              <button className='prev-btn' onClick={prevPage}>
+                <FaArrowLeft />
+                page <span> {displayPage - 1}</span>
+              </button>
+            )}
+            {page === recipes.length - 1 ? null : (
+              <button className='next-btn' onClick={nextPage}>
+                <FaArrowRight /> page <span> {displayPage + 1}</span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+      <p className='copyright'>
+        &copy; copyright by{' '}
+        <a class='twitter-ling' href='https://twitter.com/demandtvs'>
+          Rasheed Adekunle {new Date().getFullYear()}
+        </a>
+      </p>
     </Wrapper>
   )
 }
@@ -67,6 +75,8 @@ export const Recipes = () => {
 const Wrapper = styled.aside`
   grid-area: list;
   background: white;
+  display: flex;
+  flex-direction: column;
 
   .recipes {
     margin-top: 2rem;
@@ -74,7 +84,7 @@ const Wrapper = styled.aside`
 
   .pagination {
     margin-top: auto;
-    padding: 1.5rem;
+    padding: 4.5rem 1.5rem;
 
     &::after {
       content: '';
@@ -113,6 +123,18 @@ const Wrapper = styled.aside`
     }
     .prev-btn {
       float: left;
+    }
+  }
+
+  .copyright {
+    color: var(--color-grey-dark-2);
+    font-size: 1.2rem;
+    padding: 3.5rem;
+    margin-top: auto;
+
+    .twitter-link:link,
+    .twitter-link:visited {
+      color: var(--color-grey-dark-2);
     }
   }
 `
