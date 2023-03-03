@@ -3,17 +3,22 @@ import styled from 'styled-components'
 import Recipe from './Recipe'
 import { useGlobalContext } from '../context'
 import {FaArrowLeft, FaArrowRight} from 'react-icons/fa'
+import Loading from './Loading'
 
 export const Recipes = () => {
-  const { recipes, isLoading } = useGlobalContext()
+  const { recipes, isLoading, fetchSingleRecipe } = useGlobalContext()
   const [page, setPage] = useState(0)
   const [newRecipes, setNewRecipes] = useState([])
-  console.log(recipes)
+
 
   useEffect(() => {
     if (isLoading) return
     setNewRecipes(recipes[page])
   }, [isLoading, page])
+
+  if(isLoading){
+    return <Loading />
+  }
 
   const nextPage = ()=> {
     setPage(oldPage=> {
@@ -44,7 +49,9 @@ export const Recipes = () => {
       <div className='result-wrapper'>
         <ul className='recipes'>
           {newRecipes &&
-            newRecipes.map((recipe) => <Recipe key={recipe.id} {...recipe} />)}
+            newRecipes.map((recipe) => (
+              <Recipe key={recipe.id} {...recipe} />
+            ))}
         </ul>
         {newRecipes && (
           <div className='pagination'>
@@ -64,9 +71,10 @@ export const Recipes = () => {
       </div>
       <p className='copyright'>
         &copy; copyright by{' '}
-        <a class='twitter-ling' href='https://twitter.com/demandtvs'>
-          Rasheed Adekunle {new Date().getFullYear()}
+        <a className ='twitter-ling' href='https://twitter.com/demandtvs'>
+          Rasheed Adekunle
         </a>
+        {new Date().getFullYear()}
       </p>
     </Wrapper>
   )
@@ -77,9 +85,11 @@ const Wrapper = styled.aside`
   background: white;
   display: flex;
   flex-direction: column;
+  padding: 3rem 0;
 
   .recipes {
-    margin-top: 2rem;
+    list-style: none;
+    margin-bottom: 2rem;
   }
 
   .pagination {
@@ -131,6 +141,9 @@ const Wrapper = styled.aside`
     font-size: 1.2rem;
     padding: 3.5rem;
     margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
 
     .twitter-link:link,
     .twitter-link:visited {

@@ -6,30 +6,52 @@ const RecipeContext = createContext()
 
 const initialState = {
   isLoading: false,
-  recipes: []
+  isSingleLoading: false,
+  recipes: [],
+  singleRecipe: {},
+  bookmarks: [],
 }
 
+const url = 'https://forkify-api.herokuapp.com/api/v2/recipes'
+const Api_key = 'f6bcdc3c-0d49-4457-86c0-f537a6ca6ae1'
+
 export const RecipeProvider = ({ children }) => {
-  const [state, dispatch] =  useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const fetchRecipes = async (query) => {
-    dispatch({type: 'START_LOADING'})
+    dispatch({ type: 'START_LOADING' })
     try {
-      const url = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${query}&key=78b50e84-cf51-49be-b811-6c91893ceca4`
-      const response = await fetch(url)
+      const response = await fetch(
+        `${url}?search=${query}&key=${Api_key}`
+      )
       const data = await response.json()
-      dispatch({type: 'GET_RECIPES', payload:paginate(data.data.recipes)})
-     
+      console.log(data)
+      dispatch({ type: 'GET_RECIPES', payload: paginate(data.data.recipes) })
     } catch (error) {
       console.log(error)
-      dispatch({type:'STOP_LOADING'})
+      dispatch({ type: 'STOP_LOADING' })
     } finally {
       dispatch({ type: 'STOP_LOADING' })
     }
   }
 
+  const fetchSingleRecipe = async (id) => {
+     dispatch({type: 'START_SINGLE_LOADING'})
+    try {
+      const request = await fetch(`${url}/${id}?key=${Api_key}`)
+      const data = await request.json()
+      dispatch({ type: 'GET_SINGLE_RECIPE', payload: data.data.recipe })
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+      dispatch({type: 'STOP_SINGLE_LOADING'})
+    }
+  }
+
   return (
-    <RecipeContext.Provider value={{...state, fetchRecipes}}>
+    <RecipeContext.Provider
+      value={{ ...state, fetchRecipes, fetchSingleRecipe }}
+    >
       {children}
     </RecipeContext.Provider>
   )

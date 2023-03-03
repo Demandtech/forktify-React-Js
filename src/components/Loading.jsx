@@ -1,9 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+import { FaSpinner } from 'react-icons/fa'
+import {InfinitySpin} from 'react-loader-spinner'
 
 const Loading = () => {
   return (
-    <div>Loading</div>
+    <Wrapper>
+      <div className='spinner'>
+        <InfinitySpin  width='200' color='var(--color-primary)'/>
+      </div>
+    </Wrapper>
   )
 }
 
@@ -11,14 +17,8 @@ const Wrapper = styled.div`
   .spinner {
     margin: 5rem auto;
     text-align: center;
-
-    svg {
-      height: 6rem;
-      width: 6rem;
-      fill: $color-primary;
-      animation: rotate 2s infinite linear;
-    }
   }
+
 `
 
 export default Loading

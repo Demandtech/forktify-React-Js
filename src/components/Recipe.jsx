@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useGlobalContext } from '../context'
 
-const Recipe = ({ publisher, image_url, title }) => {
+const Recipe = ({ publisher, image_url, title, id }) => {
+  const {fetchSingleRecipe}= useGlobalContext()
   return (
-    <Wrapper className='preview'>
+    <Wrapper className='preview' onClick={()=>fetchSingleRecipe(id)}>
       <figure className='img'>
         <img src={image_url} alt='' />
       </figure>
