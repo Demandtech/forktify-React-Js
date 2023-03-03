@@ -87,10 +87,10 @@ const Wrapper = styled.aside`
       gap: 0.5rem;
       cursor: pointer;
       color: var(--color-primary);
-      font-size: 1rem;
+      font-size: 1.7rem;
       font-weight: 600;
       background-color: var(--color-grey-light-1);
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.2rem;
       border-radius: 10rem;
       cursor: pointer;
 

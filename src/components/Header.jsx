@@ -6,34 +6,44 @@ import { useState } from 'react'
 
 export const Header = () => {
   const [query, setquery] = useState('pizza')
-  const {fetchRecipes} = useGlobalContext()
+  const { fetchRecipes } = useGlobalContext()
   return (
     <Wrapper>
       <img src={logo} alt='logo' className='logo' />
       <form className='search'>
         <input
           value={query}
-          onChange={(e)=> setquery(e.target.value)}
+          onChange={(e) => setquery(e.target.value)}
           type='text'
           placeholder='Search over 1,000,000 recipes...'
           className='search__field'
         />
-        <button className='btn search_btn' onClick={(e)=>{ 
-          e.preventDefault()
-          fetchRecipes(query)}}>
+        <button
+          className='btn search_btn'
+          onClick={(e) => {
+            e.preventDefault()
+            fetchRecipes(query)
+          }}
+        >
           <FaSearch />
           SEARCH
         </button>
       </form>
       <div className='menu'>
-        <button>
-          <FaEdit />
-          <span>ADD RECIPE</span>
-        </button>
-        <button>
-          <FaBookmark />
-          <span> BOOKMARKS</span>
-        </button>
+        <ul>
+          <li>
+            <button>
+              <FaEdit  className='icon'/>
+              <span>ADD RECIPE</span>
+            </button>
+          </li>
+          <li>
+            <button>
+              <FaBookmark  className='icon'/>
+              <span> BOOKMARKS</span>
+            </button>
+          </li>
+        </ul>
       </div>
     </Wrapper>
   )
@@ -45,23 +55,20 @@ const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 1rem 1rem 0 0;
-  min-height: 6rem;
-  padding: 0 2rem;
 
   .logo {
-    height: 2.6rem;
+    margin-left: 4rem;
+    height: 4.6rem;
     display: block;
   }
 
   .search {
-    display: flex;
-    min-width: 32rem;
-    position: relative;
-    height: 3.2rem;
-    transition: all 0.3s;
     background-color: #fff;
     border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    padding-left: 3rem;
+    transition: all 0.3s;
 
     &:focus-within {
       transform: translateY(-2px);
@@ -69,13 +76,12 @@ const Wrapper = styled.header`
     }
 
     input {
-      width: 100%;
-      height: 100%;
       border: none;
-      border-radius: 10rem;
-      font-size: 1rem;
-      padding-left: 2rem;
+      background: none;
+      font-family: inherit;
       color: inherit;
+      font-size: 1.7rem;
+      width: 30rem;
 
       &::placeholder {
         color: var(--color-grey-light-3);
@@ -84,50 +90,90 @@ const Wrapper = styled.header`
       &: focus {
         outline: none;
       }
+
+      @media only screen and (max-width: 980px) {
+        width: auto;
+
+        &::placeholder {
+          color: white;
+        }
+      }
     }
 
     button {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      background-image: var(--gradient);
       border-radius: 10rem;
       border: none;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      background-image: var(--gradient);
-      color: var(--white);
-      padding: 0 1.5rem;
-      font-size: 1rem;
+      gap: 0.7rem;
+      transition: all 0.2s;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
+      font-family: inherit;
+      padding: 1.5rem 4rem;
+      font-size: 1.4rem;
 
       &:hover {
-        scale: 1.1;
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      .icon {
+        height: 2.25rem;
+        width: 2.25rem;
       }
     }
   }
 
   .menu {
-    display: flex;
-    align-items: center;
-    height: 100%;
+    align-self: stretch;
+    margin-right: 2.5rem;
 
-    button {
-      all: unset;
-      color: var(--color-primary);
-      height: 100%;
+    ul {
+      list-style: none;
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      padding: 0 1rem;
-      transition: all 0.3s;
+      height: 100%;
 
-      &:hover {
-        background-color: var(--color-grey-light-2);
+      li {
+        position: relative;
+
+        button {
+          height: 100%;
+          font-family: inherit;
+          color: inherit;
+          font-size: 1.4rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0 1.5rem;
+          transition: all 0.3s;
+          display: flex;
+          align-items: center;
+
+          .icon {
+            height: 2.4rem;
+            width: 2.4rem;
+            fill: var(--color-primary);
+            margin-right: 0.7rem;
+            transform: translateY(-1px);
+          }
+
+          &:hover {
+            background-color: var(--color-grey-light-2);
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
       }
     }
   }

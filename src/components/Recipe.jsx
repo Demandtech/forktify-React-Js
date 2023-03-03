@@ -18,7 +18,7 @@ const Recipe = ({ publisher, image_url, title }) => {
 const Wrapper = styled.article`
   display: flex;
   align-items: center;
-  padding: 1.25rem;
+  padding: 1.5rem 3.25rem;
   transition: all 0.3s;
   border-right: 1px solid #fff;
   cursor:pointer;
@@ -29,13 +29,29 @@ const Wrapper = styled.article`
   }
 
   .img {
-    flex: 0 0 3.8rem;
+    flex: 0 0 5.8rem;
     border-radius: 50%;
     overflow: hidden;
-    height: 3.8rem;
-    margin-right: 1rem;
+    height: 5.8rem;
+    margin-right: 2rem;
     position: relative;
     backface-visibility: hidden;
+
+    &::before {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(
+        to right bottom,
+        var(--color-grad-1),
+        var(--color-grad-2)
+      );
+      opacity: 0.4;
+    }
 
     img {
       display: block;
@@ -56,7 +72,7 @@ const Wrapper = styled.article`
 
     .preview-title {
       grid-column: 1/-1;
-      font-size: 1rem;
+      font-size: 1.45rem;
       color: var(--color-primary);
       text-transform: uppercase;
       font-weight: 600;
@@ -67,7 +83,7 @@ const Wrapper = styled.article`
     }
 
     .preview-publisher {
-      font-size: .8rem;
+      font-size: 1.15rem;
       color: var(--color-grey-dark-2);
       text-transform: uppercase;
       font-weight: 600;
