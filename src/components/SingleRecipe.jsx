@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
 import Loading from './Loading'
-import { FaCheck } from 'react-icons/fa'
+import { CiFaceSmile } from 'react-icons/ci'
 import Details from './Details'
 
 const SingleRecipe = () => {
@@ -23,7 +23,8 @@ const SingleRecipe = () => {
     return (
       <Wrapper>
         <div className='empty'>
-          <p> Start by searching for a recipe or an ingredient. Have fun!</p>
+          <CiFaceSmile className='icon' />
+          <p>Start by searching for a recipe or an ingredient. Have fun!</p>
         </div>
       </Wrapper>
     )
@@ -51,9 +52,9 @@ const Wrapper = styled.article`
   figure {
     height: 32rem;
     position: relative;
-    transform: scale(1.04) translateY(-1px);
+    transform:  ;
     transform-origin: top;
-
+    width: 100%;
     &::before {
       content: '';
       display: block;
@@ -110,8 +111,17 @@ const Wrapper = styled.article`
   .empty {
     font-size: 2rem;
     text-align: center;
-    padding-top: 4.5rem;
+    padding: 4.5rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    .icon{
+      font-size: 2rem;
+      color: var(--color-primary);
+    }
   }
 `
 export default SingleRecipe

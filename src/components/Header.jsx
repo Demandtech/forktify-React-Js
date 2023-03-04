@@ -3,10 +3,12 @@ import logo from '../assets/logo.png'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
 import { useState } from 'react'
+import Bookmarks from './Bookmarks'
 
 export const Header = () => {
   const [query, setquery] = useState('pizza')
   const { fetchRecipes } = useGlobalContext()
+  const [openBookmark, setOpenBookmark] = useState(false)
   return (
     <Wrapper>
       <img src={logo} alt='logo' className='logo' />
@@ -33,16 +35,20 @@ export const Header = () => {
         <ul>
           <li>
             <button>
-              <FaEdit  className='icon'/>
+              <FaEdit className='icon' />
               <span>ADD RECIPE</span>
             </button>
           </li>
           <li>
-            <button>
-              <FaRegBookmark  className='icon'/>
+            <button
+              onClick={() => setOpenBookmark(!openBookmark)}
+             
+            >
+              <FaRegBookmark className='icon' />
               <span> BOOKMARKS</span>
             </button>
           </li>
+          {openBookmark && <Bookmarks />}
         </ul>
       </div>
     </Wrapper>
@@ -55,6 +61,7 @@ const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 
   .logo {
     margin-left: 4rem;
@@ -178,46 +185,46 @@ const Wrapper = styled.header`
     }
   }
 
-  @media screen and (max-width: 500px) {
-    flex-direction: column;
-    min-width: 100%;
-    gap: 1rem;
-    padding: 1rem;
+  // @media screen and (max-width: 500px) {
+  //   flex-direction: column;
+  //   min-width: 100%;
+  //   gap: 1rem;
+  //   padding: 1rem;
 
-    .search {
-      min-width: 100%;
-      flex-direction: column;
-      height: 100px;
+  //   .search {
+  //     min-width: 100%;
+  //     flex-direction: column;
+  //     height: 100px;
 
-      input {
-        padding: 0 0 0 1rem;
+  //     input {
+  //       padding: 0 0 0 1rem;
 
-        &::placeholder {
-          font-size: 0.8rem;
-        }
-      }
+  //       &::placeholder {
+  //         font-size: 0.8rem;
+  //       }
+  //     }
 
-      button {
-        font-size: 0.8rem;
-        padding: 0 0.5rem;
-        gap: 0.5rem;
-      }
-    }
-  }
+  //     button {
+  //       font-size: 0.8rem;
+  //       padding: 0 0.5rem;
+  //       gap: 0.5rem;
+  //     }
+  //   }
+  // }
 
-  @media screen and (max-width: 321px) {
-    .search {
-      height: 80px;
-      button {
-        font-size: 0.6rem;
-        padding: 0 0.5rem;
-        gap: 0.5rem;
-      }
-    }
-    .menu {
-      button {
-        font-size: 0.8rem;
-      }
-    }
-  }
+  // @media screen and (max-width: 321px) {
+  //   .search {
+  //     height: 80px;
+  //     button {
+  //       font-size: 0.6rem;
+  //       padding: 0 0.5rem;
+  //       gap: 0.5rem;
+  //     }
+  //   }
+  //   .menu {
+  //     button {
+  //       font-size: 0.8rem;
+  //     }
+  //   }
+  // }
 `

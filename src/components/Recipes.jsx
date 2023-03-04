@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Recipe from './Recipe'
 import { useGlobalContext } from '../context'
-import {FaArrowLeft, FaArrowRight} from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import Loading from './Loading'
 
 export const Recipes = () => {
@@ -10,32 +10,31 @@ export const Recipes = () => {
   const [page, setPage] = useState(0)
   const [newRecipes, setNewRecipes] = useState([])
 
-
   useEffect(() => {
     if (isLoading) return
     setNewRecipes(recipes[page])
   }, [isLoading, page])
 
-  if(isLoading){
+  if (isLoading) {
     return <Loading />
   }
 
-  const nextPage = ()=> {
-    setPage(oldPage=> {
+  const nextPage = () => {
+    setPage((oldPage) => {
       let nextPage = oldPage + 1
 
-      if(nextPage > recipes.length - 1){
-        nextPage = recipes.length -1
+      if (nextPage > recipes.length - 1) {
+        nextPage = recipes.length - 1
       }
       return nextPage
     })
   }
 
-  const prevPage = ()=> {
-    setPage(oldPage=>{
+  const prevPage = () => {
+    setPage((oldPage) => {
       let prevPage = oldPage - 1
 
-      if(prevPage < 0){
+      if (prevPage < 0) {
         prevPage = 0
       }
       return prevPage
@@ -49,9 +48,7 @@ export const Recipes = () => {
       <div className='result-wrapper'>
         <ul className='recipes'>
           {newRecipes &&
-            newRecipes.map((recipe) => (
-              <Recipe key={recipe.id} {...recipe} />
-            ))}
+            newRecipes.map((recipe, index) => <Recipe key={recipe.id} {...recipe} index={index} />)}
         </ul>
         {newRecipes && (
           <div className='pagination'>
@@ -71,7 +68,7 @@ export const Recipes = () => {
       </div>
       <p className='copyright'>
         &copy; copyright by{' '}
-        <a className ='twitter-ling' href='https://twitter.com/demandtvs'>
+        <a className='twitter-ling' href='https://twitter.com/demandtvs'>
           Rasheed Adekunle
         </a>
         {new Date().getFullYear()}

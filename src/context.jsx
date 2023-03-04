@@ -30,7 +30,6 @@ export const RecipeProvider = ({ children }) => {
     try {
       const response = await fetch(`${url}?search=${query}&key=${Api_key}`)
       const data = await response.json()
-      console.log(data)
       dispatch({ type: 'GET_RECIPES', payload: paginate(data.data.recipes) })
     } catch (error) {
       console.log(error)
@@ -46,7 +45,6 @@ export const RecipeProvider = ({ children }) => {
       const request = await fetch(`${url}/${id}?key=${Api_key}`)
       const data = await request.json()
       dispatch({ type: 'GET_SINGLE_RECIPE', payload: data.data.recipe })
-      console.log(data)
     } catch (err) {
       console.log(err)
       dispatch({ type: 'STOP_SINGLE_LOADING' })

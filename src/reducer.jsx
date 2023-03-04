@@ -7,7 +7,10 @@ export const reducer = (state, action) => {
     case 'STOP_LOADING':
       return { ...state, isLoading: false }
     case 'GET_SINGLE_RECIPE':
-      return { ...state, isSingleLoading: false, singleRecipe: action.payload }
+     let bookmark = state.bookmarkList.some(bookmark=>{
+        return bookmark.id === action.payload.id
+      })
+      return { ...state, isSingleLoading: false, singleRecipe:{...action.payload, bookmark:bookmark}}
     case 'START_SINGLE_LOADING':
       return { ...state, isSingleLoading: true }
     case 'STOP_SINGLE_LOADING':

@@ -1,29 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
 
-const Recipe = ({ publisher, image_url, title, id }) => {
-  const {fetchSingleRecipe}= useGlobalContext()
+const Recipe = ({ publisher, image_url, title, id, index }) => {
+  const { fetchSingleRecipe } = useGlobalContext();
+  const [active, setActive] = useState(-1)
   return (
-    <Wrapper className='preview' onClick={()=>fetchSingleRecipe(id)}>
-      <figure className='img'>
-        <img src={image_url} alt='' />
-      </figure>
-      <div className='preview-data'>
-        <p className='preview-title'>{title}</p>
-        <p className='preview-publisher'>{publisher}</p>
-      </div>
+    <Wrapper
+      
+      onClick={() => {
+        fetchSingleRecipe(id)   
+      }}
+    >
+      <article>
+        <figure className='img'>
+          <img src={image_url} alt='' />
+        </figure>
+        <div className='preview-data'>
+          <p className='preview-title'>{title}</p>
+          <p className='preview-publisher'>{publisher}</p>
+        </div>
+      </article>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.article`
-  display: flex;
+ article {display: flex;
   align-items: center;
   padding: 1.5rem 3.25rem;
   transition: all 0.3s;
   border-right: 1px solid #fff;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-grey-light-1);
@@ -90,7 +98,7 @@ const Wrapper = styled.article`
       text-transform: uppercase;
       font-weight: 600;
     }
-  }
+  }}
 `
 
 export default Recipe

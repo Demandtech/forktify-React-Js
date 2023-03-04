@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaRegClock, FaBookmark, FaRegBookmark } from 'react-icons/fa'
-import { CiCirclePlus, CiCircleMinus } from 'react-icons/ci'
+import {
+  CiCirclePlus,
+  CiCircleMinus,
+  CiBookmark,
+  CiBookmarkRemove,
+  CiClock1,
+  CiClock2,
+} from 'react-icons/ci'
 import { FiUsers } from 'react-icons/fi'
 import { useGlobalContext } from '../context'
 
-const Details = ({ cooking_time, servings, id, bookmark}) => {
+const Details = ({ cooking_time, servings, id, bookmark }) => {
   const [serve, setServe] = useState(servings)
-  
-  const { setBookmark} = useGlobalContext()
- 
+
+  const { setBookmark } = useGlobalContext()
+
   const increaseServe = () => {
     setServe((oldserve) => oldserve + 1)
   }
@@ -24,26 +31,36 @@ const Details = ({ cooking_time, servings, id, bookmark}) => {
   return (
     <Wrapper>
       <div className='info'>
-        <FaRegClock className='icon' />
-        <p>{cooking_time}</p>
-        <span>Minutes</span>
+        <CiClock2 className='icon' />
+        <div className='info-content'>
+          <span className='recipe-minute'>{cooking_time}</span>
+          <span className='recipe-minute-text'>Minutes</span>
+        </div>
       </div>
       <div className='info'>
         <FiUsers className='icon' />
-        <p>{serve}</p>
-        <span>Servings</span>
+        <div className='info-content'>
+          <span className='recipe-serve'>{serve}</span>
+          <span className='recipe-serve-text'>Servings</span>
+        </div>
 
         <div className='info-btns'>
-          <div>
-            <CiCircleMinus className='icon' onClick={decreaseServe} />
-          </div>
-          <div>
-            <CiCirclePlus className='icon' onClick={increaseServe} />
-          </div>
+          <button onClick={decreaseServe}>
+            <CiCircleMinus className='icon' />
+          </button>
+          <button onClick={increaseServe}>
+            <CiCirclePlus className='icon' />
+          </button>
         </div>
       </div>
-      <div className='bookmark-btn' onClick={()=> setBookmark(id)}>
-       {bookmark ? <FaRegBookmark className='icon' /> : <FaBookmark  className='icon'/>}
+      <div className='info-bookmark'>
+        <button className='bookmark-btn' onClick={() => setBookmark(id)}>
+          {bookmark ? (
+            <CiBookmarkRemove className='icon' />
+          ) : (
+            <CiBookmark className='icon' />
+          )}
+        </button>
       </div>
     </Wrapper>
   )
@@ -59,37 +76,40 @@ const Wrapper = styled.article`
     text-transform: uppercase;
     display: flex;
     align-items: center;
+    gap: 1.6rem;
 
     &:not(:last-child) {
       margin-right: 4.5rem;
     }
+    .info-content {
+      transform: translateY(3px);
+
+      .recipe-minute {
+        font-weight: 700;
+        margin-right: 0.8rem;
+      }
+
+      .recipe-serve {
+        font-weight: 700;
+        margin-right: 0.8rem;
+      }
+    }
     .icon {
-      height: 2.35rem;
-      width: 2.35rem;
+      font-size: 2.7rem;
       color: var(--color-primary);
-      margin-right: 1.15rem;
     }
-
-    p {
-      margin-right: 0.5rem;
-      font-weight: 700;
-    }
-
     .info-btns {
       display: flex;
-      margin-left: 1.6rem;
-      //transform: translateY(-1px);
-      gap: 1rem;
-      align-items: center;
+      gap: 1.5rem;
+      transform: translateY(5px);
 
-      .icon {
-        margin: 0;
-        color: var(--color-primary);
+      button {
+        all: unset;
       }
     }
   }
 
-  .bookmark-btn {
+  .info-bookmark {
     background: var(--gradient);
     display: flex;
     align-items: center;
@@ -97,19 +117,22 @@ const Wrapper = styled.article`
     height: 4rem;
     width: 4rem;
     border-radius: 10rem;
-    cursor: pointer;
     margin-left: auto;
     margin-right: 1.75rem;
-    transition: all 0.2s;
+    transition: all .3s;
+    cursor: pointer;
 
-    &:hover {
-      transform: scale(1.05);
+    button {
+      all: unset;
+      .icon {
+        font-size: 2.7rem;
+        color: var(--white);
+        transform: translateY(2px);
+      }
     }
 
-    .icon {
-      height: 2.25rem;
-      width: 2.25rem;
-      color: var(--white);
+    &:hover{
+      transform: scale(1.07)
     }
   }
 `
