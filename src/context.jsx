@@ -8,14 +8,20 @@ import {
 import { reducer } from './reducer'
 import paginate from './utils'
 
-const RecipeContext = createContext()
+const RecipeContext = createContext();
+let bookmarks = [];
+if(localStorage.getItem('bookmarks')){
+  bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
+}else{
+  bookmarks = []
+}
 
 const initialState = {
   isLoading: false,
   isSingleLoading: false,
   recipes: [],
   singleRecipe: {},
-  bookmarkList: [],
+  bookmarkList: bookmarks,
 }
 
 const url = 'https://forkify-api.herokuapp.com/api/v2/recipes'
@@ -23,7 +29,12 @@ const Api_key = 'f6bcdc3c-0d49-4457-86c0-f537a6ca6ae1'
 
 export const RecipeProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  //const [bookmark, setBookmark] = useState(false)
+  
+  useEffect(() => {
+    localStorage.setItem('bookmarks', JSON.stringify(state.bookmarkList))
+  }, [state.bookmarkList])
+
+  
 
   const fetchRecipes = async (query) => {
     dispatch({ type: 'START_LOADING' })

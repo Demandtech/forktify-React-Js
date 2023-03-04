@@ -7,10 +7,14 @@ export const reducer = (state, action) => {
     case 'STOP_LOADING':
       return { ...state, isLoading: false }
     case 'GET_SINGLE_RECIPE':
-     let bookmark = state.bookmarkList.some(bookmark=>{
+      let bookmark = state.bookmarkList.some((bookmark) => {
         return bookmark.id === action.payload.id
       })
-      return { ...state, isSingleLoading: false, singleRecipe:{...action.payload, bookmark:bookmark}}
+      return {
+        ...state,
+        isSingleLoading: false,
+        singleRecipe: { ...action.payload, bookmark: bookmark },
+      }
     case 'START_SINGLE_LOADING':
       return { ...state, isSingleLoading: true }
     case 'STOP_SINGLE_LOADING':
@@ -36,6 +40,8 @@ export const reducer = (state, action) => {
           (recipe) => recipe.id !== action.payload
         ),
       }
+    default:
+      throw new Error(`Unknown action type: ${action.type}`)
   }
   return state
 }
