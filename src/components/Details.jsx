@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { FaRegClock, FaBookmark, FaRegBookmark } from 'react-icons/fa'
+import {FaBookmark, FaRegBookmark } from 'react-icons/fa'
 import {
-  CiCirclePlus,
-  CiCircleMinus,
-  CiBookmark,
-  CiBookmarkRemove,
-  CiClock1,
-  CiClock2,
-} from 'react-icons/ci'
+  AiOutlinePlusCircle,
+  AiOutlineMinusCircle,
+  AiOutlineClockCircle,
+} from 'react-icons/ai'
 import { FiUsers } from 'react-icons/fi'
 import { useGlobalContext } from '../context'
 
 const Details = ({ cooking_time, servings, id, bookmark }) => {
   const [serve, setServe] = useState(servings)
 
-  const { setBookmark } = useGlobalContext()
+  const { setBookmark, updateServings } = useGlobalContext()
 
   const increaseServe = () => {
     setServe((oldserve) => oldserve + 1)
@@ -31,7 +28,7 @@ const Details = ({ cooking_time, servings, id, bookmark }) => {
   return (
     <Wrapper>
       <div className='info'>
-        <CiClock2 className='icon' />
+        <AiOutlineClockCircle className='icon' />
         <div className='info-content'>
           <span className='recipe-minute'>{cooking_time}</span>
           <span className='recipe-minute-text'>Minutes</span>
@@ -45,20 +42,26 @@ const Details = ({ cooking_time, servings, id, bookmark }) => {
         </div>
 
         <div className='info-btns'>
-          <button onClick={decreaseServe}>
-            <CiCircleMinus className='icon' />
+          <button onClick={()=> {
+            decreaseServe()
+            updateServings(serve)
+            }}>
+            <AiOutlineMinusCircle className='icon' />
           </button>
-          <button onClick={increaseServe}>
-            <CiCirclePlus className='icon' />
+          <button onClick={()=>{
+            increaseServe()
+            updateServings(serve)
+          }}>
+            <AiOutlinePlusCircle className='icon' />
           </button>
         </div>
       </div>
       <div className='info-bookmark'>
         <button className='bookmark-btn' onClick={() => setBookmark(id)}>
           {bookmark ? (
-            <CiBookmarkRemove className='icon' />
+            <FaBookmark className='icon' />
           ) : (
-            <CiBookmark className='icon' />
+            <FaRegBookmark className='icon' />
           )}
         </button>
       </div>
@@ -105,6 +108,7 @@ const Wrapper = styled.article`
 
       button {
         all: unset;
+        cursor: pointer;
       }
     }
   }
@@ -125,7 +129,7 @@ const Wrapper = styled.article`
     button {
       all: unset;
       .icon {
-        font-size: 2.7rem;
+        font-size: 2rem;
         color: var(--white);
         transform: translateY(2px);
       }

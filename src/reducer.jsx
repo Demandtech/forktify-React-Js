@@ -40,6 +40,12 @@ export const reducer = (state, action) => {
           (recipe) => recipe.id !== action.payload
         ),
       }
+      case 'UPDATE_SERVINGS':
+      const newState = {...state.singleRecipe}
+      newState.ingredients.forEach(ing=>{
+        ing.quantity = (ing.quantity * action.payload) / state.singleRecipe.servings
+      })     
+        return {...state, singleRecipe:{...newState}}
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

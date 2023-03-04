@@ -20,9 +20,9 @@ const Bookmarks = () => {
   return (
     <Wrapper>   
         {bookmarkList.map((bookmark, index) => (
-          <article key={index}>
-            <Recipe {...bookmark} />
-          </article>
+          
+            <Recipe key={index} {...bookmark} />
+          
         ))}    
     </Wrapper>
   )
@@ -38,9 +38,7 @@ const Wrapper = styled.article`
   right: 0;
   transform: translateY(1px);
  
-  article{
-   width: 100%;
-  }
+  
   .empty{
    font-size: 2rem;
    display: flex;

@@ -70,16 +70,17 @@ export const RecipeProvider = ({ children }) => {
     }
   }
 
-  //  useEffect(()=> {
-  // if (bookmark) {
-  //   dispatch({ type: 'REMOVE_BOOKMARK', payload: id })
-  // } else {
-  //   dispatch({ type: 'ADD_BOOKMARK', payload: id })
-  // }
-  //  }, [bookmark])
+  const updateServings = (newServing)=> {
+    // console.log(newServing)
+    // state.singleRecipe.ingredients.forEach(ing=>{
+    //   ing.quantity = (ing.quantity * newServing) / state.singleRecipe.servings
+    // })
+    // state.singleRecipe.servings = newServing
+    dispatch({type: 'UPDATE_SERVINGS', payload:newServing})
+  }
   return (
     <RecipeContext.Provider
-      value={{ ...state, fetchRecipes, fetchSingleRecipe, setBookmark }}
+      value={{ ...state, fetchRecipes, fetchSingleRecipe, setBookmark, updateServings }}
     >
       {children}
     </RecipeContext.Provider>

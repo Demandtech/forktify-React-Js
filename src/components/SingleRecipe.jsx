@@ -4,10 +4,12 @@ import { useGlobalContext } from '../context'
 import Loading from './Loading'
 import { CiFaceSmile } from 'react-icons/ci'
 import Details from './Details'
+import Ingridients from './Ingridients'
+import Directions from './Directions'
 
 const SingleRecipe = () => {
   const { singleRecipe, isSingleLoading } = useGlobalContext()
-
+  
   const {
     cooking_time,
     id,
@@ -40,7 +42,9 @@ const SingleRecipe = () => {
           <span>{title}</span>
         </h1>
       </figure>
-      <Details {...singleRecipe}/>  
+      <Details {...singleRecipe}/>
+      <Ingridients {...singleRecipe}/> 
+      <Directions {...singleRecipe}/> 
     </Wrapper>
   )
 }
