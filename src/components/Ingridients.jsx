@@ -1,21 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import {FaCheck} from 'react-icons/fa';
-//var Fraction = require('fractional').Fraction
+import React from 'react'
+import styled from 'styled-components'
+import { FaCheck } from 'react-icons/fa'
+import Fraction from 'fraction.js'
 
 const Ingridients = ({ ingredients }) => {
 
+  const getFract = (dec) => {
+    var x = new Fraction(dec)
+    var res = x.toFraction(true)
+    return res
+  }
   return (
     <Wrapper>
       <h2>Recipe Ingridients</h2>
       <ul>
-        {ingredients.map((ing, index)=> (
-         <li key={index}>
-           <FaCheck className='icon' />
-           <div className='quantity'>{ing.quantity? (ing.quantity): ''}</div>
-           <div className='unit'>{ing.unit}</div>
-           <div className='desc'>{ing.description}</div>
-         </li>
+        {ingredients.map((ing, index) => (
+          <li key={index}>
+            <FaCheck className='icon' />
+            <div className='quantity'>
+              {ing.quantity ? getFract(ing.quantity).toString() : ''}
+            </div>
+            <div className='unit'>{ing.unit}</div>
+            <div className='desc'>{ing.description}</div>
+          </li>
         ))}
       </ul>
     </Wrapper>
