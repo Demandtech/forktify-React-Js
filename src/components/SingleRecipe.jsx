@@ -14,7 +14,7 @@ const SingleRecipe = () => {
     image_url,
     ingredients,
     publisher,
-    serving,
+    servings,
     source_url,
     title,
   } = singleRecipe

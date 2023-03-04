@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FaSpinner } from 'react-icons/fa'
 import {InfinitySpin} from 'react-loader-spinner'
 
 const Loading = () => {

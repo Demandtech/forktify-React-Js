@@ -1,4 +1,4 @@
-import { FaSearch, FaEdit, FaBookmark } from 'react-icons/fa'
+import { FaSearch, FaEdit, FaRegBookmark } from 'react-icons/fa'
 import logo from '../assets/logo.png'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
@@ -39,7 +39,7 @@ export const Header = () => {
           </li>
           <li>
             <button>
-              <FaBookmark  className='icon'/>
+              <FaRegBookmark  className='icon'/>
               <span> BOOKMARKS</span>
             </button>
           </li>

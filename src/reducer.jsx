@@ -12,6 +12,27 @@ export const reducer = (state, action) => {
       return { ...state, isSingleLoading: true }
     case 'STOP_SINGLE_LOADING':
       return { ...state, isSingleLoading: false }
+    case 'ADD_BOOKMARK':
+      let allArray = state.recipes.flat()
+      return {
+        ...state,
+        singleRecipe: { ...state.singleRecipe, bookmark: true },
+        bookmarkList: [
+          ...state.bookmarkList,
+          allArray.find((recipe) => recipe.id == action.payload),
+        ],
+      }
+    case 'REMOVE_BOOKMARK':
+      return {
+        ...state,
+        singleRecipe: {
+          ...state.singleRecipe,
+          bookmark: !state.singleRecipe.bookmark,
+        },
+        bookmarkList: state.bookmarkList.filter(
+          (recipe) => recipe.id !== action.payload
+        ),
+      }
   }
   return state
 }
