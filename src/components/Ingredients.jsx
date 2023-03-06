@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaCheck } from 'react-icons/fa'
-import Fraction from 'fraction.js'
+import { useGlobalContext } from '../context'
+import { useEffect } from 'react'
+import { getFraction } from '../utils'
 
-const Ingridients = ({ ingredients }) => {
+const Ingredients = () => {
+  const {servings, updateQuantity, ingredients} = useGlobalContext()
 
-  const getFract = (dec) => {
-    var x = new Fraction(dec)
-    var res = x.toFraction(true)
-    return res
-  }
+  useEffect(() => {
+    updateQuantity()
+  }, [servings])
+
   return (
     <Wrapper>
       <h2>Recipe Ingridients</h2>
@@ -18,7 +20,7 @@ const Ingridients = ({ ingredients }) => {
           <li key={index}>
             <FaCheck className='icon' />
             <div className='quantity'>
-              {ing.quantity ? getFract(ing.quantity).toString() : ''}
+              {getFraction(ing.quantity)}
             </div>
             <div className='unit'>{ing.unit}</div>
             <div className='desc'>{ing.description}</div>
@@ -73,4 +75,4 @@ const Wrapper = styled.article`
   }
 `
 
-export default Ingridients
+export default Ingredients

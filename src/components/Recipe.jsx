@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
 
 const Recipe = ({ publisher, image_url, title, id, index }) => {
   const { fetchSingleRecipe } = useGlobalContext();
-  const [active, setActive] = useState(-1)
+  const [active, setActive] = useState()
+  
   return (
     <Wrapper
       
       onClick={() => {
-        fetchSingleRecipe(id)   
+        fetchSingleRecipe(id) 
+       
       }}
     >
-      <article>
+      <article >
         <figure className='img'>
           <img src={image_url} alt='' />
         </figure>

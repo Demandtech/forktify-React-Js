@@ -8,11 +8,11 @@ import {
 import { reducer } from './reducer'
 import paginate from './utils'
 
-const RecipeContext = createContext();
-let bookmarks = [];
-if(localStorage.getItem('bookmarks')){
+const RecipeContext = createContext()
+let bookmarks = []
+if (localStorage.getItem('bookmarks')) {
   bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
-}else{
+} else {
   bookmarks = []
 }
 
@@ -22,6 +22,8 @@ const initialState = {
   recipes: [],
   singleRecipe: {},
   bookmarkList: bookmarks,
+  servings: '',
+  ingredients:[]
 }
 
 const url = 'https://forkify-api.herokuapp.com/api/v2/recipes'
@@ -29,12 +31,10 @@ const Api_key = 'f6bcdc3c-0d49-4457-86c0-f537a6ca6ae1'
 
 export const RecipeProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  
+
   useEffect(() => {
     localStorage.setItem('bookmarks', JSON.stringify(state.bookmarkList))
   }, [state.bookmarkList])
-
-  
 
   const fetchRecipes = async (query) => {
     dispatch({ type: 'START_LOADING' })
@@ -70,17 +70,31 @@ export const RecipeProvider = ({ children }) => {
     }
   }
 
-  const updateServings = (newServing)=> {
-    // console.log(newServing)
-    // state.singleRecipe.ingredients.forEach(ing=>{
-    //   ing.quantity = (ing.quantity * newServing) / state.singleRecipe.servings
-    // })
-    // state.singleRecipe.servings = newServing
-    dispatch({type: 'UPDATE_SERVINGS', payload:newServing})
+  const toggleServings = (command) => {
+    if (command === 'INC') {
+      dispatch({ type: 'INCREASE_SERVINGS' })
+    }
+    if (command === 'DESC') {
+      dispatch({ type: 'DECREASE_SERVINGS' })
+    }
   }
+
+ const updateQuantity = ()=> {
+  dispatch({type:'UPDATE_QUANTITY', payload:state.servings})
+ }
+
+
+
   return (
     <RecipeContext.Provider
-      value={{ ...state, fetchRecipes, fetchSingleRecipe, setBookmark, updateServings }}
+      value={{
+        ...state,
+        fetchRecipes,
+        fetchSingleRecipe,
+        setBookmark,
+        toggleServings,
+        updateQuantity,
+      }}
     >
       {children}
     </RecipeContext.Provider>

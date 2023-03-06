@@ -12,6 +12,7 @@ export const reducer = (state, action) => {
       })
       return {
         ...state,
+        servings: action.payload.servings,
         isSingleLoading: false,
         singleRecipe: { ...action.payload, bookmark: bookmark },
       }
@@ -40,13 +41,36 @@ export const reducer = (state, action) => {
           (recipe) => recipe.id !== action.payload
         ),
       }
-      case 'UPDATE_SERVINGS':
-      const newState = {...state.singleRecipe}
-      newState.ingredients.forEach(ing=>{
-        ing.quantity = (ing.quantity * action.payload) / state.singleRecipe.servings
-      }) 
-      newState.servings = action.payload    
-        return {...state, singleRecipe:{...newState}}
+    case 'INCREASE_SERVINGS':
+      return {
+        ...state,
+        servings: state.servings + 1,
+      }
+
+    case 'DECREASE_SERVINGS':
+      return {
+        ...state,
+        servings: state.servings > 1 ? state.servings - 1 : state.servings,
+      }
+    case 'UPDATE_QUANTITY':
+      const newIngredients = state.singleRecipe.ingredients.map(
+        (ingredient) => {
+          return {
+            ...ingredient,
+            quantity:
+              (ingredient.quantity * action.payload) /
+              state.singleRecipe.servings,
+          }
+        }
+      )
+      const updatedSingleRecipe = {
+        ...state.singleRecipe,
+        ingredients: newIngredients,
+      }
+      return {
+        ...state,
+        ingredients:newIngredients
+      }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

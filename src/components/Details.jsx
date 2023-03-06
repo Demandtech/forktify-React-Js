@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {FaBookmark, FaRegBookmark } from 'react-icons/fa'
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa'
 import {
   AiOutlinePlusCircle,
   AiOutlineMinusCircle,
@@ -9,22 +9,22 @@ import {
 import { FiUsers } from 'react-icons/fi'
 import { useGlobalContext } from '../context'
 
-const Details = ({ cooking_time, servings, id, bookmark }) => {
-  const [serve, setServe] = useState(servings)
+const Details = ({ cooking_time, id, bookmark }) => {
+  //const [serve, setServe] = useState(servings)
 
-  const { setBookmark, updateServings } = useGlobalContext()
+  const { setBookmark, toggleServings, servings } = useGlobalContext()
+  // const increaseServe = () => {
+  //   servings += 1
+  // }
 
-  const increaseServe = () => {
-    setServe((oldserve) => oldserve + 1)
-  }
+  // const decreaseServe = () => {
+  //   if (servings > 1) {
+  //     servings -= 1
+  //   } else {
+  //     servings = 1
+  //   }
+  // }
 
-  const decreaseServe = () => {
-    if (serve > 1) {
-      setServe((oldserve) => oldserve - 1)
-    } else {
-      setServe(1)
-    }
-  }
   return (
     <Wrapper>
       <div className='info'>
@@ -37,21 +37,23 @@ const Details = ({ cooking_time, servings, id, bookmark }) => {
       <div className='info'>
         <FiUsers className='icon' />
         <div className='info-content'>
-          <span className='recipe-serve'>{serve}</span>
+          <span className='recipe-serve'>{servings}</span>
           <span className='recipe-serve-text'>Servings</span>
         </div>
 
         <div className='info-btns'>
-          <button onClick={()=> {
-            decreaseServe()
-            updateServings(serve)
-            }}>
+          <button
+            onClick={() => {
+              toggleServings('DESC')
+            }}
+          >
             <AiOutlineMinusCircle className='icon' />
           </button>
-          <button onClick={()=>{
-            increaseServe()
-            updateServings(serve)
-          }}>
+          <button
+            onClick={() => {
+              toggleServings('INC')
+            }}
+          >
             <AiOutlinePlusCircle className='icon' />
           </button>
         </div>
@@ -123,7 +125,7 @@ const Wrapper = styled.article`
     border-radius: 10rem;
     margin-left: auto;
     margin-right: 1.75rem;
-    transition: all .3s;
+    transition: all 0.3s;
     cursor: pointer;
 
     button {
@@ -135,8 +137,8 @@ const Wrapper = styled.article`
       }
     }
 
-    &:hover{
-      transform: scale(1.07)
+    &:hover {
+      transform: scale(1.07);
     }
   }
 `

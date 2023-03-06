@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
 import Loading from './Loading'
-import { CiFaceSmile } from 'react-icons/ci'
+import {FaSmile} from 'react-icons/fa'
 import Details from './Details'
-import Ingridients from './Ingridients'
+import Ingridients from './Ingredients'
 import Directions from './Directions'
 
 const SingleRecipe = () => {
-  const { singleRecipe, isSingleLoading } = useGlobalContext()
+  const { singleRecipe, isSingleLoading} = useGlobalContext()
   
   const {
     cooking_time,
@@ -16,7 +16,6 @@ const SingleRecipe = () => {
     image_url,
     ingredients,
     publisher,
-    servings,
     source_url,
     title,
   } = singleRecipe
@@ -25,7 +24,7 @@ const SingleRecipe = () => {
     return (
       <Wrapper>
         <div className='empty'>
-          <CiFaceSmile className='icon' />
+          <FaSmile className='icon' />
           <p>Start by searching for a recipe or an ingredient. Have fun!</p>
         </div>
       </Wrapper>
@@ -123,7 +122,7 @@ const Wrapper = styled.article`
     gap: 2rem;
 
     .icon{
-      font-size: 2rem;
+      font-size: 2.7rem;
       color: var(--color-primary);
     }
   }

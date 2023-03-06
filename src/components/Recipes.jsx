@@ -6,9 +6,14 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import Loading from './Loading'
 
 export const Recipes = () => {
-  const { recipes, isLoading, fetchSingleRecipe } = useGlobalContext()
+  const { recipes, isLoading} = useGlobalContext()
   const [page, setPage] = useState(0)
   const [newRecipes, setNewRecipes] = useState([])
+  const [activeIndex, setActiveIndex] = useState(null)
+
+  const handleActive = (index) => {
+    setActiveIndex(index)
+  }
 
   useEffect(() => {
     if (isLoading) return
@@ -41,14 +46,22 @@ export const Recipes = () => {
     })
   }
 
-  const displayPage = page + 1
+   const displayPage = page + 1
 
   return (
     <Wrapper>
       <div className='result-wrapper'>
         <ul className='recipes'>
           {newRecipes &&
-            newRecipes.map((recipe, index) => <Recipe key={recipe.id} {...recipe} index={index} />)}
+            newRecipes.map((recipe, index) => (
+              <li
+                key={recipe.id}
+                className={activeIndex === index ? 'active' : ''}
+                onClick={()=> handleActive(index)}
+              >
+                <Recipe {...recipe} index={index} />
+              </li>
+            ))}
         </ul>
         {newRecipes && (
           <div className='pagination'>
