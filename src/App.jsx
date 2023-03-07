@@ -1,8 +1,8 @@
-import './app.css'
 import { Header } from './components/Header'
 import { Recipes } from './components/Recipes'
 import SingleRecipe from './components/SingleRecipe'
 import styled from 'styled-components'
+
 
 
 function App() {

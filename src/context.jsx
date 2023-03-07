@@ -93,14 +93,6 @@ export const RecipeProvider = ({ children }) => {
     dispatch({ type: 'UPDATE_QUANTITY', payload: state.servings })
   }
 
-  // const getBookmarkList = () => {
-  //   console.log('bookmark')
-  //   dispatch({ type: 'BOOKMARK_LIST' })
-  // }
-
-  // useEffect(() => {
-  //   getBookmarkList()
-  // }, [state.singleRecipe.bookmark]) 
 
   return (
     <RecipeContext.Provider
