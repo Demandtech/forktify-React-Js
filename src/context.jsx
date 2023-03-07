@@ -73,7 +73,11 @@ export const RecipeProvider = ({ children }) => {
   }
 
   const setBookmark = (id) => {
-    dispatch({ type: 'SET_BOOKMARKS', payload: id })
+    if(state.singleRecipe.bookmark){
+      dispatch({type: 'REMOVE_BOOKMARK', payload:id})
+    }else{
+      dispatch({type: 'ADD_BOOKMARK', payload:id})
+    }
   }
 
   const toggleServings = (command) => {
@@ -89,14 +93,14 @@ export const RecipeProvider = ({ children }) => {
     dispatch({ type: 'UPDATE_QUANTITY', payload: state.servings })
   }
 
-  const getBookmarkList = () => {
-    console.log('bookmark')
-    dispatch({ type: 'BOOKMARK_LIST' })
-  }
+  // const getBookmarkList = () => {
+  //   console.log('bookmark')
+  //   dispatch({ type: 'BOOKMARK_LIST' })
+  // }
 
-  useEffect(() => {
-    getBookmarkList()
-  }, [state.singleRecipe.bookmark]) 
+  // useEffect(() => {
+  //   getBookmarkList()
+  // }, [state.singleRecipe.bookmark]) 
 
   return (
     <RecipeContext.Provider
@@ -107,7 +111,6 @@ export const RecipeProvider = ({ children }) => {
         setBookmark,
         toggleServings,
         updateQuantity,
-        getBookmarkList
       }}
     >
       {children}

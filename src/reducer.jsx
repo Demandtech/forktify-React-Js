@@ -12,7 +12,7 @@ export const reducer = (state, action) => {
       return { ...state, isLoading: false }
     case 'GET_SINGLE_RECIPE':
       let bookmark = state.bookmarkList.some((bookmark) => {
-        bookmark.id === action.payload.id
+        return bookmark.id === action.payload.id
       })
       return {
         ...state,
@@ -34,14 +34,6 @@ export const reducer = (state, action) => {
       return { ...state, isError: { show: true, msg: action.payload } }
     case 'STOP_SINGLE_LOADING':
       return { ...state, isSingleLoading: false }
-    case 'SET_BOOKMARKS':
-      return {
-        ...state,
-        singleRecipe: {
-          ...state.singleRecipe,
-          bookmark: !state.singleRecipe.bookmark,
-        },
-      }
 
     case 'INCREASE_SERVINGS':
       return {
@@ -68,9 +60,27 @@ export const reducer = (state, action) => {
         ...state,
         ingredients: newIngredients,
       }
-    case 'BOOKMARK_LIST':
-      
-      return { ...state, bookmarkList: [...newBookmarkList] }
+    case 'ADD_BOOKMARK':
+      let allArray = state.recipes.flat()
+      return {
+        ...state,
+        singleRecipe: { ...state.singleRecipe, bookmark: true },
+        bookmarkList: [
+          ...state.bookmarkList,
+          allArray.find((recipe) => recipe.id == action.payload),
+        ],
+      }
+    case 'REMOVE_BOOKMARK':
+      return {
+        ...state,
+        singleRecipe: {
+          ...state.singleRecipe,
+          bookmark: !state.singleRecipe.bookmark,
+        },
+        bookmarkList: state.bookmarkList.filter(
+          (recipe) => recipe.id !== action.payload
+        ),
+      }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }
