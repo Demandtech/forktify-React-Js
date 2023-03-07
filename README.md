@@ -1,3 +1,4 @@
+![](./src/assets/screencapture.png)
 # Forktify App
 React Version of Jonas Javascript course
 
