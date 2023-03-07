@@ -4,9 +4,10 @@ import Recipe from './Recipe'
 import { useGlobalContext } from '../context'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import Loading from './Loading'
+import Error from './Error'
 
 export const Recipes = () => {
-  const { recipes, isLoading} = useGlobalContext()
+  const { recipes, isLoading, isError} = useGlobalContext()
   const [page, setPage] = useState(0)
   const [newRecipes, setNewRecipes] = useState([])
   const [activeIndex, setActiveIndex] = useState(null)
@@ -22,6 +23,10 @@ export const Recipes = () => {
 
   if (isLoading) {
     return <Loading />
+  }
+
+  if(isError.show){
+    return <Error error={isError}/>
   }
 
   const nextPage = () => {

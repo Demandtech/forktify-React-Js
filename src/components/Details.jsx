@@ -10,20 +10,9 @@ import { FiUsers } from 'react-icons/fi'
 import { useGlobalContext } from '../context'
 
 const Details = ({ cooking_time, id, bookmark }) => {
-  //const [serve, setServe] = useState(servings)
-
+  
   const { setBookmark, toggleServings, servings } = useGlobalContext()
-  // const increaseServe = () => {
-  //   servings += 1
-  // }
-
-  // const decreaseServe = () => {
-  //   if (servings > 1) {
-  //     servings -= 1
-  //   } else {
-  //     servings = 1
-  //   }
-  // }
+ 
 
   return (
     <Wrapper>

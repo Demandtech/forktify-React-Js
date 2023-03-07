@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context'
 import Recipe from './Recipe'
 import { AiOutlineWarning } from 'react-icons/ai'
 import styled from 'styled-components'
 
 const Bookmarks = () => {
-  const { bookmarkList } = useGlobalContext()
+  const { bookmarkList} = useGlobalContext()
 
+ 
+  
   if (bookmarkList.length < 1) {
     return (
       <Wrapper>

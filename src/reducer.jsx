@@ -3,12 +3,16 @@ export const reducer = (state, action) => {
     case 'START_LOADING':
       return { ...state, isLoading: true }
     case 'GET_RECIPES':
-      return { ...state, recipes: action.payload }
+      return {
+        ...state,
+        recipes: action.payload,
+        isError: { show: false, msg: '' },
+      }
     case 'STOP_LOADING':
       return { ...state, isLoading: false }
     case 'GET_SINGLE_RECIPE':
       let bookmark = state.bookmarkList.some((bookmark) => {
-        return bookmark.id === action.payload.id
+        bookmark.id === action.payload.id
       })
       return {
         ...state,
@@ -18,35 +22,32 @@ export const reducer = (state, action) => {
       }
     case 'START_SINGLE_LOADING':
       return { ...state, isSingleLoading: true }
-    case 'STOP_SINGLE_LOADING':
-      return { ...state, isSingleLoading: false }
-    case 'ADD_BOOKMARK':
-      let allArray = state.recipes.flat()
+    case 'FETCH_ERROR':
       return {
         ...state,
-        singleRecipe: { ...state.singleRecipe, bookmark: true },
-        bookmarkList: [
-          ...state.bookmarkList,
-          allArray.find((recipe) => recipe.id == action.payload),
-        ],
+        isError: {
+          show: true,
+          msg: 'Recipe not found, Search for another recipe',
+        },
       }
-    case 'REMOVE_BOOKMARK':
+    case 'NETWORK_ERROR':
+      return { ...state, isError: { show: true, msg: action.payload } }
+    case 'STOP_SINGLE_LOADING':
+      return { ...state, isSingleLoading: false }
+    case 'SET_BOOKMARKS':
       return {
         ...state,
         singleRecipe: {
           ...state.singleRecipe,
           bookmark: !state.singleRecipe.bookmark,
         },
-        bookmarkList: state.bookmarkList.filter(
-          (recipe) => recipe.id !== action.payload
-        ),
       }
+
     case 'INCREASE_SERVINGS':
       return {
         ...state,
         servings: state.servings + 1,
       }
-
     case 'DECREASE_SERVINGS':
       return {
         ...state,
@@ -63,14 +64,13 @@ export const reducer = (state, action) => {
           }
         }
       )
-      const updatedSingleRecipe = {
-        ...state.singleRecipe,
-        ingredients: newIngredients,
-      }
       return {
         ...state,
-        ingredients:newIngredients
+        ingredients: newIngredients,
       }
+    case 'BOOKMARK_LIST':
+      
+      return { ...state, bookmarkList: [...newBookmarkList] }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

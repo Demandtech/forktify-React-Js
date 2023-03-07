@@ -6,9 +6,12 @@ import { useState } from 'react'
 import Bookmarks from './Bookmarks'
 
 export const Header = () => {
-  const [query, setquery] = useState('pizza')
+  const [query, setquery] = useState('')
   const { fetchRecipes } = useGlobalContext()
   const [openBookmark, setOpenBookmark] = useState(false)
+
+ 
+  
   return (
     <Wrapper>
       <img src={logo} alt='logo' className='logo' />
@@ -32,13 +35,7 @@ export const Header = () => {
         </button>
       </form>
       <div className='menu'>
-        <ul>
-          <li>
-            <button>
-              <FaEdit className='icon' />
-              <span>ADD RECIPE</span>
-            </button>
-          </li>
+        <ul>       
           <li>
             <button
               onClick={() => setOpenBookmark(!openBookmark)}

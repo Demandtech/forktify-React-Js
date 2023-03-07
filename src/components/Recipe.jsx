@@ -11,7 +11,6 @@ const Recipe = ({ publisher, image_url, title, id, index }) => {
       
       onClick={() => {
         fetchSingleRecipe(id) 
-       
       }}
     >
       <article >

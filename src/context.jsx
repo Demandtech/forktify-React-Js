@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useContext,
   useEffect,
@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { reducer } from './reducer'
 import paginate from './utils'
+import { v4 as uuid4 } from 'uuid'
 
 const RecipeContext = createContext()
 let bookmarks = []
@@ -19,15 +20,16 @@ if (localStorage.getItem('bookmarks')) {
 const initialState = {
   isLoading: false,
   isSingleLoading: false,
+  isError: { show: false, msg: '' },
   recipes: [],
   singleRecipe: {},
   bookmarkList: bookmarks,
   servings: '',
-  ingredients:[]
+  ingredients: [],
 }
 
 const url = 'https://forkify-api.herokuapp.com/api/v2/recipes'
-const Api_key = 'f6bcdc3c-0d49-4457-86c0-f537a6ca6ae1'
+const Api_key = '27740627-f9f4-4a5e-b0e9-ef10a9837cfe'
 
 export const RecipeProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -41,10 +43,18 @@ export const RecipeProvider = ({ children }) => {
     try {
       const response = await fetch(`${url}?search=${query}&key=${Api_key}`)
       const data = await response.json()
-      dispatch({ type: 'GET_RECIPES', payload: paginate(data.data.recipes) })
+
+      if (data.results < 1 || data.data.recipes.length < 1) {
+        dispatch({ type: 'FETCH_ERROR' })
+      } else {
+        dispatch({ type: 'GET_RECIPES', payload: paginate(data.data.recipes) })
+      }
     } catch (error) {
       console.log(error)
-      dispatch({ type: 'STOP_LOADING' })
+      dispatch({
+        type: 'NETWORK_ERROR',
+        payload: 'Network Error please Connect to Internet or try again later',
+      })
     } finally {
       dispatch({ type: 'STOP_LOADING' })
     }
@@ -63,11 +73,7 @@ export const RecipeProvider = ({ children }) => {
   }
 
   const setBookmark = (id) => {
-    if (state.singleRecipe.bookmark) {
-      dispatch({ type: 'REMOVE_BOOKMARK', payload: id })
-    } else {
-      dispatch({ type: 'ADD_BOOKMARK', payload: id })
-    }
+    dispatch({ type: 'SET_BOOKMARKS', payload: id })
   }
 
   const toggleServings = (command) => {
@@ -79,11 +85,18 @@ export const RecipeProvider = ({ children }) => {
     }
   }
 
- const updateQuantity = ()=> {
-  dispatch({type:'UPDATE_QUANTITY', payload:state.servings})
- }
+  const updateQuantity = () => {
+    dispatch({ type: 'UPDATE_QUANTITY', payload: state.servings })
+  }
 
+  const getBookmarkList = () => {
+    console.log('bookmark')
+    dispatch({ type: 'BOOKMARK_LIST' })
+  }
 
+  useEffect(() => {
+    getBookmarkList()
+  }, [state.singleRecipe.bookmark]) 
 
   return (
     <RecipeContext.Provider
@@ -94,6 +107,7 @@ export const RecipeProvider = ({ children }) => {
         setBookmark,
         toggleServings,
         updateQuantity,
+        getBookmarkList
       }}
     >
       {children}
